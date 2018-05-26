@@ -1,7 +1,8 @@
-package io.keepcoding.smartwaiter
+package io.keepcoding.smartwaiter.activity
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import io.keepcoding.smartwaiter.R
 
 class TableListActivity : AppCompatActivity() {
 
