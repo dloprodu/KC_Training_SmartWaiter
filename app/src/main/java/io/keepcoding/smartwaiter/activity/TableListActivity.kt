@@ -6,8 +6,9 @@ import android.view.ViewGroup
 import io.keepcoding.smartwaiter.R
 import io.keepcoding.smartwaiter.fragment.OrderFragment
 import io.keepcoding.smartwaiter.fragment.TableListFragment
+import io.keepcoding.smartwaiter.model.Table
 
-class TableListActivity : AppCompatActivity() {
+class TableListActivity : AppCompatActivity(), TableListFragment.OnTableListFragmentListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,6 +35,16 @@ class TableListActivity : AppCompatActivity() {
                         .commit()
             }
         }
+    }
 
+    override fun onTableSelected(table: Table, position: Int) {
+        val orderFragment = supportFragmentManager.findFragmentById(R.id.order_fragment) as? OrderFragment
+
+        if (orderFragment != null) {
+            orderFragment.showOrder(position)
+        } else {
+            val intent = OrderActivity.intent(this, position)
+            startActivity(intent)
+        }
     }
 }

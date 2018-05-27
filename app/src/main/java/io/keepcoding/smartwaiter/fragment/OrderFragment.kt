@@ -2,7 +2,6 @@ package io.keepcoding.smartwaiter.fragment
 
 import android.app.Activity
 import android.content.Context
-import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
@@ -13,6 +12,7 @@ import io.keepcoding.smartwaiter.R
 import io.keepcoding.smartwaiter.model.Dish
 import io.keepcoding.smartwaiter.model.Table
 import io.keepcoding.smartwaiter.model.Tables
+import kotlinx.android.synthetic.main.fragment_order.*
 
 
 class OrderFragment : Fragment() {
@@ -30,6 +30,7 @@ class OrderFragment : Fragment() {
     // Interface use to communicate us with Activities
     interface OnOrderFragmentListener {
         fun onDishSelected(dish: Dish, position: Int)
+        fun onTableChange(table: Table, position: Int)
     }
 
     private var table: Table? = null
@@ -46,11 +47,16 @@ class OrderFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_order, container, false)
+
+
+        fab.setOnClickListener { view ->
+        }
     }
 
-    // fun onButtonPressed(uri: Uri) {
-    //    listener?.onDishSelected(...)
-    // }
+    fun showOrder(tableIndex: Int) {
+        listener?.onTableChange(Tables[tableIndex], tableIndex)
+        // TODO
+    }
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
