@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import io.keepcoding.smartwaiter.R
 import io.keepcoding.smartwaiter.model.Dish
 import io.keepcoding.smartwaiter.model.Table
+import io.keepcoding.smartwaiter.model.Tables
 
 
 class OrderFragment : Fragment() {
@@ -37,7 +38,7 @@ class OrderFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            table = it.getSerializable(ARG_TABLE) as Table
+            table = Tables[ it.getInt(ARG_TABLE, 0) ]
         }
     }
 

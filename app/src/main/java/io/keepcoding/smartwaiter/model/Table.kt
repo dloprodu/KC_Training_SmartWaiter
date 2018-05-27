@@ -6,6 +6,9 @@ data class Table(var name: String, var minDiners: Int, var maxDiners: Int, var i
 
     override fun toString(): String = name
 
+    val isAvailable: Boolean
+        get() = order == null
+
     fun createOrder() {
         order = Order(this, mutableListOf(), "")
     }
