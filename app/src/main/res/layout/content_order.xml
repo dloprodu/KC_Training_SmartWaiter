@@ -13,4 +13,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
+    <TextView android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/create_new_order_message"
+        android:text="@string/create_new_order"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:visibility="gone"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:padding="12dp"
+        android:textColor="@android:color/darker_gray"/>
+
 </FrameLayout>

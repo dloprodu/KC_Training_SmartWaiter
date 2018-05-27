@@ -12,6 +12,7 @@ import android.transition.Explode
 import android.transition.Slide
 import android.view.Gravity
 import android.view.MenuItem
+import android.view.ViewGroup
 import android.view.Window
 import io.keepcoding.smartwaiter.R
 import io.keepcoding.smartwaiter.fragment.OrderFragment
@@ -53,7 +54,18 @@ class OrderActivity : AppCompatActivity(), OrderFragment.OnOrderFragmentListener
         setContentView(R.layout.activity_order)
         setSupportActionBar(toolbar)
 
-        val table = Tables[ intent.getIntExtra(EXTRA_TABLE_INDEX, 0) ]
+        val tableIndex = intent.getIntExtra(EXTRA_TABLE_INDEX, 0);
+
+        if (findViewById<ViewGroup>(R.id.order_fragment) != null) {
+            // Hemos cargado una interfaz que tiene el hueco para el fragment CityPagerFragment
+            if (supportFragmentManager.findFragmentById(R.id.order_fragment) == null) {
+                supportFragmentManager.beginTransaction()
+                        .add(R.id.order_fragment, OrderFragment.newInstance(tableIndex))
+                        .commit()
+            }
+        }
+
+        val table = Tables[ tableIndex ]
 
         // Vamos a decirle a la actividad que use nuestra toolbar personalizada
         // toolbar.setLogo(R.mipmap.ic_launcher)

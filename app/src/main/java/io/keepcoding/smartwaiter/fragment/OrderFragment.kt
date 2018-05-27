@@ -9,9 +9,12 @@ import android.view.View
 import android.view.ViewGroup
 
 import io.keepcoding.smartwaiter.R
+import io.keepcoding.smartwaiter.adapter.OrderRecyclerViewAdapter
 import io.keepcoding.smartwaiter.model.Dish
+import io.keepcoding.smartwaiter.model.Order
 import io.keepcoding.smartwaiter.model.Table
 import io.keepcoding.smartwaiter.model.Tables
+import kotlinx.android.synthetic.main.content_order.*
 import kotlinx.android.synthetic.main.fragment_order.*
 
 
@@ -33,13 +36,37 @@ class OrderFragment : Fragment() {
         fun onTableChange(table: Table, position: Int)
     }
 
+    var order: Order? = null
+        set(value) {
+            field = value
+
+            if (value != null && value.count > 0) {
+                val adapter = OrderRecyclerViewAdapter(value.dishes)
+
+                dish_list.adapter = adapter
+                dish_list.visibility = View.VISIBLE;
+                create_new_order_message.visibility = View.GONE;
+
+                setRecyclerViewClickListener()
+            } else {
+                dish_list.adapter = null
+
+                dish_list.visibility = View.GONE;
+                create_new_order_message.visibility = View.VISIBLE;
+            }
+        }
+
     private var table: Table? = null
     private var listener: OnOrderFragmentListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         arguments?.let {
-            table = Tables[ it.getInt(ARG_TABLE, 0) ]
+            showOrder(it.getInt(ARG_TABLE, 0))
         }
     }
 
@@ -55,7 +82,9 @@ class OrderFragment : Fragment() {
 
     fun showOrder(tableIndex: Int) {
         listener?.onTableChange(Tables[tableIndex], tableIndex)
-        // TODO
+        order = Tables[tableIndex].order
+
+        create_new_order_message.text = this.activity?.getString(R.string.create_new_order, Tables[tableIndex].name)
     }
 
     override fun onAttach(context: Context?) {
@@ -78,6 +107,30 @@ class OrderFragment : Fragment() {
             listener = activity
         } else {
             listener = null
+        }
+    }
+
+    fun setRecyclerViewClickListener() {
+        val adapter = dish_list?.adapter as? OrderRecyclerViewAdapter
+        adapter?.onClickListener = View.OnClickListener {
+            // Alguien ha pulsado un elemento del RecyclerView
+            val forecastIndex = dish_list.getChildAdapterPosition(it)
+            /*
+
+            TODO
+
+            val city = arguments?.getSerializable(ARG_CITY) as City
+            val cityIndex = Cities.getIndex(city)
+
+            // Opciones especiales para navegar con vistas comunes
+            val animationOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                    activity,
+                    it,
+                    getString(R.string.transition_to_detail)
+            )
+
+            startActivity(DetailActivity.intent(activity!!, cityIndex, forecastIndex), animationOptions.toBundle())
+            */
         }
     }
 }

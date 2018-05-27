@@ -38,10 +38,11 @@ class TableListActivity : AppCompatActivity(), TableListFragment.OnTableListFrag
     }
 
     override fun onTableSelected(table: Table, position: Int) {
-        val orderFragment = supportFragmentManager.findFragmentById(R.id.order_fragment) as? OrderFragment
-
-        if (orderFragment != null) {
-            orderFragment.showOrder(position)
+        if (findViewById<ViewGroup>(R.id.order_fragment) != null) {
+            val orderFragment = supportFragmentManager.findFragmentById(R.id.order_fragment) as? OrderFragment
+            if (orderFragment != null) {
+                orderFragment.showOrder(position)
+            }
         } else {
             val intent = OrderActivity.intent(this, position)
             startActivity(intent)
