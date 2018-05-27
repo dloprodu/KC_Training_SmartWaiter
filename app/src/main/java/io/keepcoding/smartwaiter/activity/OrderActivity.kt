@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.v4.app.NavUtils
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
@@ -98,7 +97,8 @@ class OrderActivity : AppCompatActivity(), OrderFragment.OnOrderFragmentListener
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun onTableChange(table: Table, position: Int) {
-        toolbar.title = table.name
+    override fun onAddNewDish(table: Table, position: Int) {
+        val intent = DishListActivity.intent(this, position)
+        startActivity(intent)
     }
 }

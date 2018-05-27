@@ -9,7 +9,7 @@ import android.widget.TextView
 import io.keepcoding.smartwaiter.R
 import io.keepcoding.smartwaiter.model.Dish
 
-class OrderRecyclerViewAdapter(private val order: List<Dish>)
+class OrderRecyclerViewAdapter(private val order: Array<Dish>)
     : RecyclerView.Adapter<OrderRecyclerViewAdapter.OrderViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OrderViewHolder {
         val view = LayoutInflater.from(parent?.context).inflate(R.layout.content_dish, parent, false)

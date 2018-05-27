@@ -18,6 +18,7 @@ import kotlinx.android.synthetic.main.content_order.*
 import kotlinx.android.synthetic.main.fragment_order.*
 
 
+@Suppress("UNREACHABLE_CODE")
 class OrderFragment : Fragment() {
 
     companion object {
@@ -33,7 +34,7 @@ class OrderFragment : Fragment() {
     // Interface use to communicate us with Activities
     interface OnOrderFragmentListener {
         fun onDishSelected(dish: Dish, position: Int)
-        fun onTableChange(table: Table, position: Int)
+        fun onAddNewDish(table: Table, position: Int)
     }
 
     var order: Order? = null
@@ -41,7 +42,7 @@ class OrderFragment : Fragment() {
             field = value
 
             if (value != null && value.count > 0) {
-                val adapter = OrderRecyclerViewAdapter(value.dishes)
+                val adapter = OrderRecyclerViewAdapter(value.dishes.toTypedArray())
 
                 dish_list.adapter = adapter
                 dish_list.visibility = View.VISIBLE;
@@ -59,14 +60,17 @@ class OrderFragment : Fragment() {
     private var table: Table? = null
     private var listener: OnOrderFragmentListener? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         arguments?.let {
             showOrder(it.getInt(ARG_TABLE, 0))
+        }
+
+        fab_create.setOnClickListener { view ->
+            arguments?.let {
+                val tableIndex = it.getInt(ARG_TABLE, 0)
+                listener?.onAddNewDish(Tables[tableIndex], tableIndex)
+            }
         }
     }
 
@@ -74,14 +78,9 @@ class OrderFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_order, container, false)
-
-
-        fab.setOnClickListener { view ->
-        }
     }
 
     fun showOrder(tableIndex: Int) {
-        listener?.onTableChange(Tables[tableIndex], tableIndex)
         order = Tables[tableIndex].order
 
         create_new_order_message.text = this.activity?.getString(R.string.create_new_order, Tables[tableIndex].name)

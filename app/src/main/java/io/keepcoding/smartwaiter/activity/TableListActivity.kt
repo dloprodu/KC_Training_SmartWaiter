@@ -6,9 +6,10 @@ import android.view.ViewGroup
 import io.keepcoding.smartwaiter.R
 import io.keepcoding.smartwaiter.fragment.OrderFragment
 import io.keepcoding.smartwaiter.fragment.TableListFragment
+import io.keepcoding.smartwaiter.model.Dish
 import io.keepcoding.smartwaiter.model.Table
 
-class TableListActivity : AppCompatActivity(), TableListFragment.OnTableListFragmentListener {
+class TableListActivity : AppCompatActivity(), TableListFragment.OnTableListFragmentListener, OrderFragment.OnOrderFragmentListener  {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,5 +48,14 @@ class TableListActivity : AppCompatActivity(), TableListFragment.OnTableListFrag
             val intent = OrderActivity.intent(this, position)
             startActivity(intent)
         }
+    }
+
+    override fun onDishSelected(dish: Dish, position: Int) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onAddNewDish(table: Table, position: Int) {
+        val intent = DishListActivity.intent(this, position)
+        startActivity(intent)
     }
 }
