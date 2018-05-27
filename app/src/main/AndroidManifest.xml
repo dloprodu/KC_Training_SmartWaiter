@@ -19,7 +19,10 @@
         <activity
             android:name=".activity.OrderActivity"
             android:label="@string/title_activity_order"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".activity.DishListActivity" />
+        <activity android:name=".activity.DishFormActivity" />
+        <activity android:name=".activity.DishDetailActivity"></activity>
     </application>
 
 </manifest>
