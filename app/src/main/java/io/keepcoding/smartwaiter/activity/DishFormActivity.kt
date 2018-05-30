@@ -13,6 +13,10 @@ import android.view.MenuItem
 import android.view.Window
 import io.keepcoding.smartwaiter.R
 import io.keepcoding.smartwaiter.model.Dishes
+import io.keepcoding.smartwaiter.model.Order
+import io.keepcoding.smartwaiter.model.OrderDish
+import io.keepcoding.smartwaiter.model.Tables
+import kotlinx.android.synthetic.main.activity_dish_form.*
 import kotlinx.android.synthetic.main.content_dish.*
 
 class DishFormActivity : AppCompatActivity() {
@@ -58,6 +62,18 @@ class DishFormActivity : AppCompatActivity() {
         dish_price.text = getString(R.string.dish_price, dish.price)
         dish_description.text = dish.description
 
+        cancel_dish.setOnClickListener { endActivity() }
+        save_dish.setOnClickListener {
+            val table = Tables[tableIndexSelected]
+
+            if (table.isAvailable) {
+                table.createOrder()
+            }
+
+            table.order?.dishes?.add(OrderDish(this.dishIndexSelected, this.dish_description.text.toString()))
+
+            endActivity()
+        }
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }

@@ -4,16 +4,15 @@ import android.app.Activity
 import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.widget.DefaultItemAnimator
+import android.support.v7.widget.GridLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 
 import io.keepcoding.smartwaiter.R
 import io.keepcoding.smartwaiter.adapter.OrderRecyclerViewAdapter
-import io.keepcoding.smartwaiter.model.Dish
-import io.keepcoding.smartwaiter.model.Order
-import io.keepcoding.smartwaiter.model.Table
-import io.keepcoding.smartwaiter.model.Tables
+import io.keepcoding.smartwaiter.model.*
 import kotlinx.android.synthetic.main.content_order.*
 import kotlinx.android.synthetic.main.fragment_order.*
 
@@ -45,6 +44,7 @@ class OrderFragment : Fragment() {
                 val adapter = OrderRecyclerViewAdapter(value.dishes.toTypedArray())
 
                 dish_list.adapter = adapter
+
                 dish_list.visibility = View.VISIBLE;
                 create_new_order_message.visibility = View.GONE;
 
@@ -57,7 +57,6 @@ class OrderFragment : Fragment() {
             }
         }
 
-    private var table: Table? = null
     private var listener: OnOrderFragmentListener? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -65,6 +64,13 @@ class OrderFragment : Fragment() {
         arguments?.let {
             showOrder(it.getInt(ARG_TABLE, 0))
         }
+
+        // Configuramos el RecycleView.
+        // - Primero decimos como se visualizan sus elementos
+        dish_list.layoutManager = GridLayoutManager(activity, resources.getInteger( R.integer.dish_columns )) // LinearLayoutManager(activity)
+
+        // - Le decimos quien es el que anima al RecyclerView
+        dish_list.itemAnimator = DefaultItemAnimator()
 
         fab_create.setOnClickListener { view ->
             arguments?.let {
@@ -78,6 +84,22 @@ class OrderFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_order, container, false)
+    }
+
+    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
+        super.setUserVisibleHint(isVisibleToUser)
+
+        arguments?.let {
+            showOrder(it.getInt(ARG_TABLE, 0))
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        arguments?.let {
+            showOrder(it.getInt(ARG_TABLE, 0))
+        }
     }
 
     fun showOrder(tableIndex: Int) {

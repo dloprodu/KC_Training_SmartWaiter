@@ -2,7 +2,7 @@ package io.keepcoding.smartwaiter.model
 
 import java.io.Serializable
 
-data class Order(var table: Table, var dishes: MutableList<Dish>, var comments: String) : Serializable {
+data class Order(var table: Table, var dishes: MutableList<OrderDish>, var comments: String) : Serializable {
 
     override fun toString(): String = "Order for ${table.name}"
 
@@ -21,7 +21,7 @@ data class Order(var table: Table, var dishes: MutableList<Dish>, var comments: 
     // Para poder iterar como si fuera una lista
     operator fun iterator() = dishes.iterator()
 
-    operator fun plus(city: Dish) {
-        dishes.add(city)
+    operator fun plus(dish: OrderDish) {
+        dishes.add(dish)
     }
 }

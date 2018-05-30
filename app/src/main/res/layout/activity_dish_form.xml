@@ -28,12 +28,37 @@
         android:layout_height="0dp"
         android:layout_marginBottom="8dp"
         android:layout_marginTop="8dp"
-        android:textColor="#ddd"
-        android:padding="@dimen/padding_edit_text"
         android:background="@drawable/edit_text_background"
         android:inputType="textMultiLine"
+        android:padding="@dimen/padding_edit_text"
+        android:textColor="#ddd"
+        app:layout_constraintBottom_toTopOf="@+id/cancel_dish"
         app:layout_constraintTop_toTopOf="@+id/guideline"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        tools:layout_editor_absoluteX="8dp" />
+
+    <Button
+        android:id="@+id/cancel_dish"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        android:text="@android:string/cancel"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/save_dish"
+        app:layout_constraintHorizontal_bias="0.6"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/save_dish"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="@android:string/ok"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.45"
+        app:layout_constraintStart_toEndOf="@+id/cancel_dish" />
 
 
 </android.support.constraint.ConstraintLayout>

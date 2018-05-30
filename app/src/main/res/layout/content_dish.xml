@@ -44,7 +44,7 @@
                 android:id="@+id/dish_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Dish name"
+                android:text="@string/placeholder_dish_name"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
@@ -52,7 +52,7 @@
                 android:id="@+id/dish_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Dish price" />
+                android:text="@string/placeholder_dish_price" />
 
 
         </LinearLayout>

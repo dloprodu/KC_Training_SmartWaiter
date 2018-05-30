@@ -15,7 +15,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.Window
 import io.keepcoding.smartwaiter.R
-import io.keepcoding.smartwaiter.adapter.OrderRecyclerViewAdapter
+import io.keepcoding.smartwaiter.adapter.DishRecyclerViewAdapter
 import io.keepcoding.smartwaiter.model.Dishes
 import kotlinx.android.synthetic.main.activity_dish_list.*
 
@@ -58,9 +58,9 @@ class DishListActivity : AppCompatActivity() {
         // - Le decimos quien es el que anima al RecyclerView
         dish_list.itemAnimator = DefaultItemAnimator()
 
-        dish_list.adapter = OrderRecyclerViewAdapter(Dishes.toArray())
+        dish_list.adapter = DishRecyclerViewAdapter(Dishes.toArray())
 
-        (dish_list.adapter as OrderRecyclerViewAdapter).onClickListener = View.OnClickListener { v: View? -> Unit
+        (dish_list.adapter as DishRecyclerViewAdapter).onClickListener = View.OnClickListener { v: View? -> Unit
             val dishIndex = dish_list.getChildAdapterPosition(v)
             startActivity(DishFormActivity.intent(this, tableIndexSelected, dishIndex))
         }
