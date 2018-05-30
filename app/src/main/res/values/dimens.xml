@@ -1,3 +1,5 @@
 <resources>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="padding_view">8dp</dimen>
+    <dimen name="padding_edit_text">12dp</dimen>
 </resources>

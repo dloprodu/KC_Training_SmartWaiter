@@ -21,7 +21,6 @@ class OrderRecyclerViewAdapter(private val order: Array<Dish>)
 
     var onClickListener: View.OnClickListener? = null
 
-
     override fun getItemCount() = order.count()
 
     override fun onBindViewHolder(holder: OrderViewHolder, position: Int) {
@@ -32,12 +31,14 @@ class OrderRecyclerViewAdapter(private val order: Array<Dish>)
         val dish_image = itemsView.findViewById<ImageView?>(R.id.dish_image)
         val dish_name = itemsView.findViewById<TextView>(R.id.dish_name)
         val dish_price = itemsView.findViewById<TextView>(R.id.dish_price)
+        val dish_description = itemsView.findViewById<TextView>(R.id.dish_description)
         val context = itemsView.context
 
         fun bindDish(dish: Dish) {
             dish_image?.setImageResource(dish.thumbnail)
             dish_name?.text = dish.name
-            dish_price?.text = context.getString(R.string.dish_price, dish.price);
+            dish_price?.text = context.getString(R.string.dish_price, dish.price)
+            dish_description.visibility = View.GONE
         }
     }
 }

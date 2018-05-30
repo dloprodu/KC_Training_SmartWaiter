@@ -12,6 +12,7 @@ import android.transition.Explode
 import android.transition.Slide
 import android.view.Gravity
 import android.view.MenuItem
+import android.view.View
 import android.view.Window
 import io.keepcoding.smartwaiter.R
 import io.keepcoding.smartwaiter.adapter.OrderRecyclerViewAdapter
@@ -30,6 +31,8 @@ class DishListActivity : AppCompatActivity() {
         }
     }
 
+    private var tableIndexSelected: Int = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         // Indicamos la animación de entrada, y la de regreso a la anterior
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -46,10 +49,7 @@ class DishListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dish_list)
 
-        val tableIndex = intent.getIntExtra(EXTRA_TABLE_INDEX,0)
-        val adapter = OrderRecyclerViewAdapter(Dishes.toArray())
-
-        // Aqui simulamos que ya nos hemos bajado la información del tiempo
+        this.tableIndexSelected = intent.getIntExtra(EXTRA_TABLE_INDEX,0)
 
         // Configuramos el RecycleView.
         // - Primero decimos como se visualizan sus elementos
@@ -58,7 +58,12 @@ class DishListActivity : AppCompatActivity() {
         // - Le decimos quien es el que anima al RecyclerView
         dish_list.itemAnimator = DefaultItemAnimator()
 
-        dish_list.adapter = adapter
+        dish_list.adapter = OrderRecyclerViewAdapter(Dishes.toArray())
+
+        (dish_list.adapter as OrderRecyclerViewAdapter).onClickListener = View.OnClickListener { v: View? -> Unit
+            val dishIndex = dish_list.getChildAdapterPosition(v)
+            startActivity(DishFormActivity.intent(this, tableIndexSelected, dishIndex))
+        }
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
