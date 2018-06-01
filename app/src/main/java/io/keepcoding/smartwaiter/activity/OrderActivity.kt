@@ -56,8 +56,8 @@ class OrderActivity : AppCompatActivity(), OrderFragment.OnOrderFragmentListener
 
         if (findViewById<ViewGroup>(R.id.order_fragment) != null) {
             // Hemos cargado una interfaz que tiene el hueco para el fragment CityPagerFragment
-            if (supportFragmentManager.findFragmentById(R.id.order_fragment) == null) {
-                supportFragmentManager.beginTransaction()
+            if (fragmentManager.findFragmentById(R.id.order_fragment) == null) {
+                fragmentManager.beginTransaction()
                         .add(R.id.order_fragment, OrderFragment.newInstance(tableIndex))
                         .commit()
             }

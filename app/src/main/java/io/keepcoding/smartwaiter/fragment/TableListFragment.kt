@@ -1,13 +1,12 @@
 package io.keepcoding.smartwaiter.fragment
 
 import android.app.Activity
+import android.app.Fragment
 import android.content.Context
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
 
 import io.keepcoding.smartwaiter.R
 import io.keepcoding.smartwaiter.adapter.TableListViewAdapter
@@ -44,13 +43,7 @@ class TableListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        /*
-        val adapter = ArrayAdapter<Table>(
-                activity,
-                android.R.layout.simple_list_item_1,
-                Tables.toArray())
-        */
+        
         val adapter = TableListViewAdapter(activity as Context, Tables.toArray())
 
         table_list_view.adapter = adapter

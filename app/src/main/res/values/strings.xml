@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Smart Waiter</string>
 
-    <string name="table_cell_description">Disponible: %s. Min comensales: %s. Max comensales: %s.</string>
+    <string name="table_cell_description">Min comensales: %s. Max comensales: %s.</string>
     <string name="title_activity_order">OrderActivity</string>
     <string name="create_new_order">Crea una nueva comanda para la mesa %s</string>
     <string name="dish_price">Price: %.2f €</string>
@@ -9,4 +9,7 @@
     <string name="placeholder_dish_price">Dish price</string>
     <string name="menu">Menú</string>
     <string name="allergen">allergen</string>
+    <string name="cuenta">Cuenta</string>
+    <string name="total_a_abonar">Total a abonar: %.2f €</string>
+    <string name="show_bill">Show bill</string>
 </resources>

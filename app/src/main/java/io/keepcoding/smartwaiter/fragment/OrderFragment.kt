@@ -1,14 +1,15 @@
 package io.keepcoding.smartwaiter.fragment
 
 import android.app.Activity
+import android.app.Fragment
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.GridLayoutManager
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.support.v7.widget.RecyclerView
+import android.view.*
 
 import io.keepcoding.smartwaiter.R
 import io.keepcoding.smartwaiter.adapter.OrderRecyclerViewAdapter
@@ -16,8 +17,6 @@ import io.keepcoding.smartwaiter.model.*
 import kotlinx.android.synthetic.main.content_order.*
 import kotlinx.android.synthetic.main.fragment_order.*
 
-
-@Suppress("UNREACHABLE_CODE")
 class OrderFragment : Fragment() {
 
     companion object {
@@ -29,6 +28,8 @@ class OrderFragment : Fragment() {
                 }
             }
     }
+
+    val REQUEST_ORDER = 1
 
     // Interface use to communicate us with Activities
     interface OnOrderFragmentListener {
@@ -67,7 +68,7 @@ class OrderFragment : Fragment() {
 
         // Configuramos el RecycleView.
         // - Primero decimos como se visualizan sus elementos
-        dish_list.layoutManager = GridLayoutManager(activity, resources.getInteger( R.integer.dish_columns )) // LinearLayoutManager(activity)
+        dish_list.layoutManager = GridLayoutManager(activity, resources.getInteger( R.integer.dish_columns )) as RecyclerView.LayoutManager? // LinearLayoutManager(activity)
 
         // - Le decimos quien es el que anima al RecyclerView
         dish_list.itemAnimator = DefaultItemAnimator()
@@ -80,10 +81,66 @@ class OrderFragment : Fragment() {
         }
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        setHasOptionsMenu(true)
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_order, container, false)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater?.inflate(R.menu.menu_order, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item?.itemId) {
+            R.id.menu_show_bill -> {
+                if (this.order == null) {
+                    return false
+                }
+
+                val trx = fragmentManager.beginTransaction()
+                val prev = fragmentManager.findFragmentByTag("bill")
+                if (prev != null) {
+                    trx?.remove(prev)
+                }
+                trx?.addToBackStack(null)
+
+                val dialog = BillDialog.newInstance(this.order!!)
+
+                dialog.setTargetFragment(this, REQUEST_ORDER)
+                dialog.show(fragmentManager, "bill")
+
+                return true
+            }
+        }
+
+        return super.onOptionsItemSelected(item)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        when (requestCode) {
+            REQUEST_ORDER -> {
+                // Estamos volviendo de la pantalla de SettingsDialog
+                // Miro cómo ha ido el resultado
+                when (resultCode) {
+                    AppCompatActivity.RESULT_OK -> {
+                        val table = order!!.table;
+                        table.order = null;
+                        order = null;
+                    }
+                    AppCompatActivity.RESULT_CANCELED -> {
+                        // No hago nada porque el usuario ha cancelado la selección de unidades
+                    }
+                }
+            }
+        }
     }
 
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
@@ -135,22 +192,11 @@ class OrderFragment : Fragment() {
         val adapter = dish_list?.adapter as? OrderRecyclerViewAdapter
         adapter?.onClickListener = View.OnClickListener {
             // Alguien ha pulsado un elemento del RecyclerView
-            val forecastIndex = dish_list.getChildAdapterPosition(it)
-            /*
 
+            /*
+            val forecastIndex = dish_list.getChildAdapterPosition(it)
             TODO
 
-            val city = arguments?.getSerializable(ARG_CITY) as City
-            val cityIndex = Cities.getIndex(city)
-
-            // Opciones especiales para navegar con vistas comunes
-            val animationOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(
-                    activity,
-                    it,
-                    getString(R.string.transition_to_detail)
-            )
-
-            startActivity(DetailActivity.intent(activity!!, cityIndex, forecastIndex), animationOptions.toBundle())
             */
         }
     }

@@ -20,9 +20,9 @@ class TableListActivity : AppCompatActivity(), TableListFragment.OnTableListFrag
         if (findViewById<ViewGroup>(R.id.table_list_fragment) != null) {
             // Hemos cargado una interfaz que tiene el hueco para el fragment CityLilstFragment
             // Comprobamos primero que no tenemos ya añadido el fragment a nuestra jerarquía
-            if (supportFragmentManager.findFragmentById(R.id.table_list_fragment)  == null) {
+            if (fragmentManager.findFragmentById(R.id.table_list_fragment)  == null) {
                 // Añadir dinámicamente el fragment a la interfaz
-                supportFragmentManager.beginTransaction()
+                fragmentManager.beginTransaction()
                         .add(R.id.table_list_fragment, TableListFragment.newInstance())
                         .commit()
             }
@@ -30,8 +30,8 @@ class TableListActivity : AppCompatActivity(), TableListFragment.OnTableListFrag
 
         if (findViewById<ViewGroup>(R.id.order_fragment) != null) {
             // Hemos cargado una interfaz que tiene el hueco para el fragment CityPagerFragment
-            if (supportFragmentManager.findFragmentById(R.id.order_fragment) == null) {
-                supportFragmentManager.beginTransaction()
+            if (fragmentManager.findFragmentById(R.id.order_fragment) == null) {
+                fragmentManager.beginTransaction()
                         .add(R.id.order_fragment, OrderFragment.newInstance(0))
                         .commit()
             }
@@ -40,7 +40,7 @@ class TableListActivity : AppCompatActivity(), TableListFragment.OnTableListFrag
 
     override fun onTableSelected(table: Table, position: Int) {
         if (findViewById<ViewGroup>(R.id.order_fragment) != null) {
-            val orderFragment = supportFragmentManager.findFragmentById(R.id.order_fragment) as? OrderFragment
+            val orderFragment = fragmentManager.findFragmentById(R.id.order_fragment) as? OrderFragment
             if (orderFragment != null) {
                 orderFragment.showOrder(position)
             }

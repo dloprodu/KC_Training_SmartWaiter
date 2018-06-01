@@ -51,7 +51,6 @@ class TableListViewAdapter(context: Context, tables: Array<Table>) : BaseAdapter
 
         viewHolder.title_item.text = table.name
         viewHolder.desc_item.text = this.context.getString(R.string.table_cell_description,
-                if (table.isAvailable) context.getString( android.R.string.yes ) else context.getString( android.R.string.no ),
                 table.minDiners.toString(),
                 table.maxDiners.toString()
                 )
