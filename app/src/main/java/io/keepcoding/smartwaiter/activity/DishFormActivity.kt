@@ -62,6 +62,17 @@ class DishFormActivity : AppCompatActivity() {
         dish_price.text = getString(R.string.dish_price, dish.price)
         dish_description.text = dish.description
 
+        for ((index, value) in dish.allergens.withIndex()) {
+            when (index) {
+                0 -> allergen_gap_one
+                1 -> allergen_gap_two
+                2 -> allergen_gap_three
+                3 -> allergen_gap_four
+                4 -> allergen_gap_five
+                else -> allergen_gap_six
+            }?.setImageResource(value.icon)
+        }
+
         cancel_dish.setOnClickListener { endActivity() }
         save_dish.setOnClickListener {
             val table = Tables[tableIndexSelected]

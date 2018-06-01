@@ -32,13 +32,30 @@ class DishRecyclerViewAdapter(private val dishes: Array<Dish>)
         val dish_name = itemsView.findViewById<TextView>(R.id.dish_name)
         val dish_price = itemsView.findViewById<TextView>(R.id.dish_price)
         val dish_description = itemsView.findViewById<TextView>(R.id.dish_description)
+        val allergen_gap1 = itemsView.findViewById<ImageView>(R.id.allergen_gap_one)
+        val allergen_gap2 = itemsView.findViewById<ImageView>(R.id.allergen_gap_two)
+        val allergen_gap3 = itemsView.findViewById<ImageView>(R.id.allergen_gap_three)
+        val allergen_gap4 = itemsView.findViewById<ImageView>(R.id.allergen_gap_four)
+        val allergen_gap5 = itemsView.findViewById<ImageView>(R.id.allergen_gap_five)
+        val allergen_gap6 = itemsView.findViewById<ImageView>(R.id.allergen_gap_six)
         val context = itemsView.context
 
         fun bindDish(dish: Dish) {
             dish_image?.setImageResource(dish.thumbnail)
             dish_name?.text = dish.name
             dish_price?.text = context.getString(R.string.dish_price, dish.price)
-            dish_description.visibility = View.GONE
+            dish_description?.visibility = View.GONE
+
+            for ((index, value) in dish.allergens.withIndex()) {
+                when (index) {
+                    0 -> allergen_gap1
+                    1 -> allergen_gap2
+                    2 -> allergen_gap3
+                    3 -> allergen_gap4
+                    4 -> allergen_gap5
+                    else -> allergen_gap6
+                }?.setImageResource(value.icon)
+            }
         }
     }
 }

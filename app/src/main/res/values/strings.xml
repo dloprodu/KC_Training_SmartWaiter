@@ -7,4 +7,6 @@
     <string name="dish_price">Price: %.2f €</string>
     <string name="placeholder_dish_name">Dish name</string>
     <string name="placeholder_dish_price">Dish price</string>
+    <string name="menu">Menú</string>
+    <string name="allergen">allergen</string>
 </resources>

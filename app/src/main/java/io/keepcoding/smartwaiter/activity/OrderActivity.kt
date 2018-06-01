@@ -34,7 +34,7 @@ class OrderActivity : AppCompatActivity(), OrderFragment.OnOrderFragmentListener
     }
 
     val toolbar: Toolbar
-        get() = findViewById<Toolbar>(R.id.toolbar)
+        get() = findViewById(R.id.toolbar)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         // Indicamos la animación de entrada, y la de regreso a la anterior
@@ -51,7 +51,6 @@ class OrderActivity : AppCompatActivity(), OrderFragment.OnOrderFragmentListener
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_order)
-        setSupportActionBar(toolbar)
 
         val tableIndex = intent.getIntExtra(EXTRA_TABLE_INDEX, 0);
 

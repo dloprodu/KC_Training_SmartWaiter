@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.support.v4.app.NavUtils
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.GridLayoutManager
+import android.support.v7.widget.Toolbar
 import android.transition.Explode
 import android.transition.Slide
 import android.view.Gravity
