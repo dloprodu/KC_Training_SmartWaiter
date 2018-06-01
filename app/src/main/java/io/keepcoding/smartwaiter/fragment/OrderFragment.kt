@@ -30,6 +30,7 @@ class OrderFragment : Fragment() {
     }
 
     val REQUEST_ORDER = 1
+    var tableIndexSelected = 0
 
     // Interface use to communicate us with Activities
     interface OnOrderFragmentListener {
@@ -63,7 +64,8 @@ class OrderFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         arguments?.let {
-            showOrder(it.getInt(ARG_TABLE, 0))
+            tableIndexSelected = it.getInt(ARG_TABLE, 0)
+            showOrder(tableIndexSelected)
         }
 
         // Configuramos el RecycleView.
@@ -75,8 +77,7 @@ class OrderFragment : Fragment() {
 
         fab_create.setOnClickListener { view ->
             arguments?.let {
-                val tableIndex = it.getInt(ARG_TABLE, 0)
-                listener?.onAddNewDish(Tables[tableIndex], tableIndex)
+                listener?.onAddNewDish(Tables[tableIndexSelected], tableIndexSelected)
             }
         }
     }
@@ -145,21 +146,16 @@ class OrderFragment : Fragment() {
 
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
         super.setUserVisibleHint(isVisibleToUser)
-
-        arguments?.let {
-            showOrder(it.getInt(ARG_TABLE, 0))
-        }
+        showOrder(tableIndexSelected)
     }
 
     override fun onResume() {
         super.onResume()
-
-        arguments?.let {
-            showOrder(it.getInt(ARG_TABLE, 0))
-        }
+        showOrder(tableIndexSelected)
     }
 
     fun showOrder(tableIndex: Int) {
+        tableIndexSelected = tableIndex
         order = Tables[tableIndex].order
 
         create_new_order_message.text = this.activity?.getString(R.string.create_new_order, Tables[tableIndex].name)
